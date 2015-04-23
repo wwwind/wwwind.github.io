@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Learning C#</title>
+
+		<meta name="description" content="Learning C#.js">
+		<meta name="author" content="Elena Zhelezina">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/solarized_dark.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+				<section><!-------------------------- slide ------------------------>
+					<h1>C#</h1>
+					<h4>Show-and-tell presentation</h4>
+					<p>
+						<small>Created by <a href="mailto:elena.zhelezina@autodesk.com">Elena Zhelezina</a> </small>
+					</p>
+				</section>
+
+
+				<section data-transition="zoom"><!-------------------------- slide ------------------------>
+					<h2 position:relative; top:10px;>Language popularity index</h2>
+					<img data-fragment-index="1" src="images/language_popularity.jpg" alt="Language popularity index">
+				</section>
+
+				<section data-transition="zoom"><!-------------------------- slide ------------------------>
+					<h2 style="position:relative; top:10px;">Resources</h2>
+						<a href="http://www.amazon.co.uk/C-5-0-Nutshell-Definitive-Reference/dp/1449320104/ref=sr_1_1?ie=UTF8&qid=1429732647&sr=8-1&keywords=c%23+in+a+nutshell">
+						<img data-fragment-index="1" src="images/book.jpg" alt="C++ book" border="0">
+						</a>
+				</section>
+
+				<!--
+				<section data-transition="zoom">
+					<h2 style="position:relative; top:10px;">.NET Stack</h2>
+						<img data-fragment-index="1" src="images/net.jpg" alt=".NET Stack" border="0">
+				</section>
+				-->
+				
+				<section>
+					<section id="photos">
+						<h2>Code examples</h2>
+						
+							
+							<ul>
+								<li><a href="#/types">Numerical types</a>,</li>
+								<!--<li><a href="#/structvsclass">Value-type vs Reference-type</a>, </li>-->
+								<li><a href="#/virtual">Virtual function members</a>, </li>
+								<li><a href="#/partial">Partial classes</a>, </li>
+								<li><a href="#/interface">Classes and Interfaces</a>, </li>
+								<li><a href="#/generic">Generics</a></li>
+							</ul>
+							
+						</p>
+
+						<div class="navigate-down" style="cursor: pointer;"><img src="images/arrow_down.png" style="border: none; background:none; box-shadow:none;" alt="Arrow Down"></div>
+					</section>
+
+					<section id="types">
+						<h2 style="position:relative; top:10px;">Numerical types</h2>
+						<pre><code data-trim>
+decimal d = 10.1M;
+
+double dip = double.InfinityPositive;
+double din = double.InfinityNegative;
+double nan = double.NaN;
+
+string str = double.ToString();
+					</code></pre>
+					<br>
+					<h4> Short-circuit</h4>
+					<pre><code data-trim>
+return (!windy && (rainy || sunny));
+return (!windy & (rainy | sunny));
+					</code></pre>
+					</section>
+
+					<section id="structvsclass">
+						<h2 style="position:relative; top:10px;">Value-type vs Reference-type</h2>
+						Boxing/unboxing concept for a unified type system
+						<pre><code data-trim>
+int x = 9;
+object obj = x; // box the int
+
+int y = (int)obj; // unbox the int
+
+// copied
+int i = 3;
+object boxed = i;
+i = 5;
+Console.WriteLine(boxed); //3
+					</code></pre>
+					</section>
+
+					<section id="virtual">
+						<h2 style="position:relative; top:10px;">Virtual function members</h2>
+						<pre><code data-trim>
+public class Asset
+{
+public string Name;
+public virtual decimal Liability { get {return 0;}}
+public sealed void getData {...}
+}
+
+// can inherit just one class
+public class House: Asset
+{
+public decimal Morgage;
+public override decimal Liability { get {return Morgage;}}
+}
+					</code></pre>
+					</section>
+					
+					<section id="partial">
+						<h2 style="position:relative; top:10px;">Partial classes</h2>
+						Partial types allow a type detinition to be split:
+						<pre><code data-trim>
+// PaymentFormGen.cs - auto-generated
+partial class PaymentForm {..}
+
+// PaymentForm.cs - hand-generated
+partial class PaymentForm {..}
+					</code></pre>
+					</section>
+	
+					<section id="interface" >
+						<h2 style="position:relative; top:10px;">Classes vs Interfaces</h2>
+					<pre><code data-trim>
+public interface IEnumerator
+{
+bool MoveNext();
+object Current {get;}
+void Reset();
+}
+</code></pre>
+<br>
+<pre>
+<code data-trim>
+internal class Countdown: IEnumerator
+{
+int count = 11;
+public bool MoveNext() {return count-- > 0;}
+public object Current { get {return count;}}
+public void Reset() { throw new NotSupportedException();}
+}
+					</code></pre>
+					</section>
+
+					<section id="generic" >
+						<h2 style="position:relative; top:10px;">Generics</h2>
+					<pre><code data-trim>
+class GenericClass&lt;T, U&gt; where T: SomeClass, SomeInterface
+                         where U : new()
+						 {...}
+					</code></pre>
+					<h4>covariance</h3>
+					<pre><code data-trim>
+Stack&lt;Bear&gt; bears = new Stack&lt;Bear&gt;();
+Stack&lt;Animal&gt; animals = bears; // Compile-time error
+					</code></pre>
+<h4>contravariance</h3>
+					<pre><code data-trim>
+Stack&lt;Bear&gt; bears = new Stack&lt;Bear&gt;();
+Stack&lt;Animal&gt; animals = bears; // Compile-time error
+					</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<h2>Demonstration</h2>
+					<img data-fragment-index="1" src="images/demonstration.jpg" alt="Language popularity index">
+					
+					<h4>Examples are available on GitHub <a href="https://github.com/wwwind/sandbox_csharp">here</a><h4>
+					
+				</section>
+
+			</div><!-- slides -->
+		</div><!-- reveal -->
+
+		<style>
+			.tabindent {
+				display: inline-block;
+				width: 30px;
+			}
+		</style>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: false,
+				history: true,
+				center: true,
+				rollingLinks: false,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+				transitionSpeed: 'slow',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { 
+						hljs.tabReplace = '<span class="tabindent">\t</span>';// replace tabs with spaces
+						hljs.initHighlightingOnLoad(); 
+					} },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
