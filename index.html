@@ -185,8 +185,11 @@ Stack&lt;Animal&gt; animals = bears; // Compile-time error
 					</code></pre>
 <h4>contravariance</h3>
 					<pre><code data-trim>
-Stack&lt;Bear&gt; bears = new Stack&lt;Bear&gt;();
-Stack&lt;Animal&gt; animals = bears; // Compile-time error
+public interface IPushable<in T> { void Push (T obj); }
+
+IPushable&lt;Animal&gt; animals = new Stack&lt;Animal&gt;();
+IPushable&lt;Bear&gt; bears = animals;
+bears.Push(new Bear());
 					</code></pre>
 					</section>
 				</section>
