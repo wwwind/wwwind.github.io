@@ -185,7 +185,7 @@ Stack&lt;Animal&gt; animals = bears; // Compile-time error
 					</code></pre>
 <h4>contravariance</h3>
 					<pre><code data-trim>
-public interface IPushable<in T> { void Push (T obj); }
+public interface IPushable&lt;in T&gt; { void Push (T obj); }
 
 IPushable&lt;Animal&gt; animals = new Stack&lt;Animal&gt;();
 IPushable&lt;Bear&gt; bears = animals;
